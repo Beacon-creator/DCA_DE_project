@@ -1,26 +1,54 @@
 import pandas as pd
 
-
-#define a function to load data to accepts string and returns a DataFrame
-def load_data(filepath: str) -> pd.DataFrame:
+def preprocessing(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Loading the data into a Pandas DataFrame with try except.
+    Clean and preprocess the Netflix dataset.
+    - Handle missing values
+    - Convert datatypes
+    - Extract features
+    - Drop unnecessary columns
     """
-    try:
-        df = pd.read_csv(filepath)
-        print(f"Successfully loaded data with {df.shape[0]} rows and {df.shape[1]} columns.")
-        return df
-    except FileNotFoundError:
-        print("File not found. Please check the path.")
-        return pd.DataFrame()
+    # --- HANDLE CATEGORICAL/TEXT MISSING VALUES ---
+    df.fillna({
+        "director": "Unknown",
+        "cast": "Unknown",
+        "country": "Unknown",
+        "date_added": "Unknown",
+        "rating": "Unknown",
+        "duration": "Unknown"
+    }, inplace=True)
 
-if __name__ == "__main__":
-    # Path to raw dataset
-    raw_file = "data/netflix_titles.csv"
+    # --- FIX DATATYPES ---
+    # Convert 'date_added' to datetime
+     # Strip whitespace and convert
+    df["date_added"] = df["date_added"].astype(str).str.strip()
+    df["date_added"] = pd.to_datetime(
+            df["date_added"].astype(str),
+            errors="coerce"
+    )
 
-    # calling the function to Load dataset
-    df = load_data(raw_file)
+    # Extract year, month, day as integers
+    df["year_added"] = df["date_added"].dt.year.astype("Int64")
+    df["month_added"] = df["date_added"].dt.month.astype("Int64")
+    df["day_added"] = df["date_added"].dt.day.astype("Int64")
 
-    # Print first few rows of the dataframe
-    print(df.head())
+    # Split 'duration' into numeric + unit
+    df["duration_value"] = (
+        df["duration"].str.extract(r"(\d+)").astype(float).astype("Int64")
+    )
+    df["duration_unit"] = df["duration"].str.extract(r"([a-zA-Z]+)").astype(str)
 
+    # Drop unnecessary column
+    df.drop(columns=["duration"], inplace=True)
+
+    # Clean up string columns
+    str_cols = df.select_dtypes(include="object").columns
+    df[str_cols] = df[str_cols].apply(lambda x: x.str.strip())
+
+    df["country"] = df["country"].str.title()
+    df["rating"] = df["rating"].str.upper()
+
+    # --- SET show_id AS INDEX ---
+    df.set_index("show_id", inplace=True)
+
+    return df

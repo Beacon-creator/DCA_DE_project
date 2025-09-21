@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: movies
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d  # run create_tables.sql at startup
+
+  app:
+    build: .
+    container_name: movie_pipeline
+    depends_on:
+      - postgres
+    volumes:
+      - ./scripts:/app/scripts
+      - ./data:/app/data
+    command: python scripts/preprocessing.py
+
+volumes:
+  postgres_data:
