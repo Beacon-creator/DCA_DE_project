@@ -1,22 +1,21 @@
-version: "3.9"
 services:
   postgres:
-    image: postgres:14
-    container_name: postgres_db
+    image: postgres:15
+    container_name: netflix_titles_db
     restart: always
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin123
-      POSTGRES_DB: movies
+      POSTGRES_USER: my_postgres
+      POSTGRES_PASSWORD: password_postgres  
+      POSTGRES_DB: netfilx_titles_db
     ports:
-      - "5432:5432"
+      - "5432:5432"    #host_port:container_port
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./sql:/docker-entrypoint-initdb.d  # run create_tables.sql at startup
 
   app:
     build: .
-    container_name: movie_pipeline
+    container_name: netfilx_titles_app
     depends_on:
       - postgres
     volumes:
