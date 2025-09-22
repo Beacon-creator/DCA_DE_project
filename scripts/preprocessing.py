@@ -47,6 +47,10 @@ def preprocessing(df: pd.DataFrame) -> pd.DataFrame:
 
     df["country"] = df["country"].str.title()
     df["rating"] = df["rating"].str.upper()
+    
+     # --- RENAME cast column as it's a reserved name ---
+    if "cast" in df.columns:
+        df.rename(columns={"cast": "cast_members"}, inplace=True)
 
     # --- SET show_id AS INDEX ---
     df.set_index("show_id", inplace=True)

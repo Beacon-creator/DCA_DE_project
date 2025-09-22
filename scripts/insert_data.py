@@ -56,9 +56,9 @@ def insert_to_db(cleaned_csv: str, db_url: str, table_name: str = "netflix_title
     print("Data successfully loaded and validated!")
 
 if __name__ == "__main__":
-    # Example connection string (adjust for your setup)
-    # Format: postgresql+psycopg2://username:password@host:port/database
-    DB_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://my_postgres:password_postgres@localhost:5432/netflix_titles_db")
+
+    # db url using the same credentials in docker-compose.yml
+    DB_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://my_postgres:password_postgres@postgres:5432/netflix_titles_db")
 
     cleaned_file = "data/cleaned_netflix.csv"
     insert_to_db(cleaned_file, DB_URL)
