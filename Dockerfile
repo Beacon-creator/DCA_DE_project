@@ -1,12 +1,15 @@
 FROM python:3.11-slim
 
+# set workdir
 WORKDIR /app
 
+# install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY scripts/ scripts/
-COPY data/ data/
-COPY sql/ sql/
+# copy project files (optional, volumes also mount them)
+COPY . .
 
-CMD ["py", "scripts/preprocessing.py"]
+# default command (can be overridden by docker compose run)
+CMD ["python", "scripts/preprocessing.py"]
+# CMD ["python", "scripts/data_cleaning.py"]
