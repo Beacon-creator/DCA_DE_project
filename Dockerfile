@@ -11,7 +11,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Install cron and netcat (for waiting on PostgreSQL)
-RUN apt-get update && apt-get install -y cron netcat-openbsd && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y procps cron netcat-openbsd && rm -rf /var/lib/apt/lists/*
 
 # Copy and enable cron job
 COPY cronjob /etc/cron.d/pipeline_cron
