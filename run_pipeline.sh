@@ -1,18 +1,3 @@
-# #!/bin/bash
-# set -e
-
-# echo "Starting pipeline..."
-
-# #!/bin/bash
-# # Run the Netflix data pipeline inside the container
-
-# # Step 1: Preprocess the data
-# python /app/scripts/data_cleaning.py
-
-# # Step 2: Insert cleaned data and run validations
-# python /app/scripts/insert_data.py
-
-
 #!/bin/bash
 # Run the Netflix data pipeline inside the container
 
