@@ -21,7 +21,9 @@ services:
     volumes:
       - ./scripts:/app/scripts
       - ./data:/app/data
-    command: python scripts/preprocessing.py
+    stdin_open: true   # keep container open for interactive use
+    tty: true          # allocate a terminal
+    command: tail -f /dev/null   # keep it running, no default script
 
 volumes:
   postgres_data:
