@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS netflix_titles_table  (
     type            VARCHAR(20) NOT NULL,       
     title           TEXT NOT NULL,
     director        TEXT,
-    cast            TEXT,
+    cast_members    TEXT,
     country         VARCHAR(255),
     date_added      DATE,                        
     release_year    INT NOT NULL,
