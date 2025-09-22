@@ -1,3 +1,2 @@
-# Run Netflix pipeline every day at 2 AM
-* * * * * root /app/run_pipeline.sh >> /var/log/cron.log 2>&1
-
+# Run Netflix pipeline every time
+* * * * * root /app/run_pipeline.sh >> /app/pipeline.log 2>&1
