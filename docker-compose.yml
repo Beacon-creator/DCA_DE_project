@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_USER: my_postgres
       POSTGRES_PASSWORD: password_postgres  
-      POSTGRES_DB: netfilx_titles_db
+      POSTGRES_DB: netflix_titles_db
     ports:
       - "5432:5432"    #host_port:container_port
     volumes:
