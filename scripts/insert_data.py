@@ -27,7 +27,7 @@ def insert_and_validate(cleaned_csv: str, db_url: str, table_name: str = "netfli
 
         # --- Insert data ---
         print(f"Inserting data into '{table_name}'...")
-        df.to_sql(table_name, conn, if_exists="append", index=False)
+        df.to_sql(table_name, conn, if_exists="replace", index=False)
 
         # --- Run validation queries ---
         print("Running validation checks from sql/validation_queries.sql...")
