@@ -1,11 +1,18 @@
 #!/bin/bash
-# Run pipeline manually
+# run_pipeline.sh - Netflix ETL pipeline
 
-# Step 1: Build and start containers
-docker compose up --build -d
+set -e  # exit if any command fails
 
-# Step 2: Run preprocessing
-docker compose run app python scripts/preprocessing.py
+LOG_FILE="/app/pipeline.log"
 
-# Step 3: Stop containers
-docker compose down
+echo "[$(date)] Starting Netflix pipeline..." >> "$LOG_FILE"
+
+# Step 1: Run data cleaning (loads raw data + preprocessing)
+echo "[$(date)] Running data cleaning..." >> "$LOG_FILE"
+python /app/scripts/data_cleaning.py >> "$LOG_FILE" 2>&1
+
+# Step 2: Load data into PostgreSQL and run validation
+echo "[$(date)] Loading data and running validation..." >> "$LOG_FILE"
+python /app/scripts/insert_data.py >> "$LOG_FILE" 2>&1
+
+echo "[$(date)] Netflix pipeline completed successfully." >> "$LOG_FILE"
