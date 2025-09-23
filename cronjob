@@ -1,1 +1,2 @@
+# Run Netflix pipeline every time
 * * * * * /app/run_pipeline.sh >> /app/pipeline.log 2>&1
