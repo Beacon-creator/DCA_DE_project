@@ -53,8 +53,9 @@ def insert_and_validate(cleaned_csv: str, db_url: str, table_name: str = "netfli
             else:
                 print("No rows returned.")
 
-    print("\nData successfully loaded and validated.")
+    print("\nSuccessful.")
 
+# database url for Docker compatibility
 if __name__ == "__main__":
     DB_URL = os.getenv(
         "DATABASE_URL",

@@ -14,10 +14,8 @@ def load_data(filepath: str) -> pd.DataFrame:
         return pd.DataFrame()
 
 if __name__ == "__main__":
-    # Path to the dataset
-    raw_file = "data/netflix_titles.csv"
 
-    #calling Load dataset function
+    raw_file = "data/netflix_titles.csv"
     df = load_data(raw_file)
 
     # Print first few rows of the dataframe
