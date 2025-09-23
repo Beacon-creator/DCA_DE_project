@@ -15,8 +15,9 @@ RUN apt-get update && apt-get install -y procps cron netcat-openbsd && rm -rf /v
 
 # Copy and enable cron job
 COPY cronjob /etc/cron.d/pipeline_cron
-RUN chmod 0644 /etc/cron.d/pipeline_cron
-RUN crontab /etc/cron.d/pipeline_cron
+RUN sed -i 's/\r$//' /etc/cron.d/pipeline_cron \
+    && chmod 0644 /etc/cron.d/pipeline_cron \
+    && crontab /etc/cron.d/pipeline_cron
 
 # Make sure the shell script is executable
 RUN chmod +x /app/run_pipeline.sh
