@@ -23,9 +23,9 @@ done
 echo "PostgreSQL is up. Starting pipeline..."
 
 # Step 1: Preprocess the data
-python3 /app/scripts/data_cleaning.py
+/usr/local/bin/python3 /app/scripts/data_cleaning.py
 
 # Step 2: Insert cleaned data and run validations
-python3 /app/scripts/insert_data.py
+/usr/local/bin/python3 /app/scripts/insert_data.py
 
 echo "Pipeline completed successfully."
